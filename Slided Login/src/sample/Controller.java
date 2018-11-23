@@ -20,12 +20,9 @@ public class Controller {
 	@FXML
 	private Pane pane4;
 	
-//	@FXML
-//	private URL location;
-//	
-//	@FXML
-//	private ResourceBundle resources;
-	
+	FadeTransition ftPane4;
+	FadeTransition ftPane3;
+	FadeTransition ftPane2;
 
 	public void initialize() {
 
@@ -39,68 +36,55 @@ public class Controller {
 	}
 
 	private void backgroundAnimation() {
+		
+		ftPane4 = new FadeTransition(Duration.seconds(5), pane4);
+		ftPane3 = new FadeTransition(Duration.seconds(3), pane3);
+		ftPane2 = new FadeTransition(Duration.seconds(3), pane2);
 
-		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(5),
-				pane4);
-		fadeTransition.setFromValue(1);
-		fadeTransition.setToValue(0);
-		fadeTransition.play();
+		ftPane4.setFromValue(1);
+		ftPane4.setToValue(0);
+		ftPane4.play();
 
-		fadeTransition
-				.setOnFinished(event -> {
+		ftPane4.setOnFinished(event -> {
+	
+			ftPane3.setFromValue(1);
+			ftPane3.setToValue(0);
+			ftPane3.play();
+					
+			ftPane3.setOnFinished(event1 -> {
+				ftPane2.setFromValue(1);
+				ftPane2.setToValue(0);
+				ftPane2.play();
 
-					FadeTransition fadeTransition1 = new FadeTransition(
-							Duration.seconds(3), pane3);
-					fadeTransition1.setFromValue(1);
-					fadeTransition1.setToValue(0);
-					fadeTransition1.play();
+				ftPane2.setOnFinished(event2 -> {
 
-					fadeTransition1.setOnFinished(event1 -> {
-						FadeTransition fadeTransition2 = new FadeTransition(
-								Duration.seconds(3), pane2);
-						fadeTransition2.setFromValue(1);
-						fadeTransition2.setToValue(0);
-						fadeTransition2.play();
+					ftPane2.setFromValue(0);
+					ftPane2.setToValue(1);
+					ftPane2.play();
 
-						fadeTransition2.setOnFinished(event2 -> {
+					ftPane2.setOnFinished(event3 -> {
 
-							FadeTransition fadeTransition0 = new FadeTransition(
-									Duration.seconds(3), pane2);
-							fadeTransition0.setFromValue(0);
-							fadeTransition0.setToValue(1);
-							fadeTransition0.play();
+						ftPane3.setFromValue(0);
+						ftPane3.setToValue(1);
+						ftPane3.play();
 
-							fadeTransition0.setOnFinished(event3 -> {
+						ftPane3.setOnFinished(event4 -> {
 
-								FadeTransition fadeTransition11 = new FadeTransition(
-										Duration.seconds(3), pane3);
+							ftPane4.setFromValue(0);
+							ftPane4.setToValue(1);
+							ftPane4.play();
 
-								fadeTransition11.setFromValue(0);
-								fadeTransition11.setToValue(1);
-								fadeTransition11.play();
+							ftPane4.setOnFinished(event5 -> {
 
-								fadeTransition11.setOnFinished(event4 -> {
-
-									FadeTransition fadeTransition22 = new FadeTransition(
-											Duration.seconds(3), pane4);
-
-									fadeTransition22.setFromValue(0);
-									fadeTransition22.setToValue(1);
-									fadeTransition22.play();
-
-									fadeTransition22.setOnFinished(event5 -> {
-
-										backgroundAnimation();
-									});
-
-								});
-
+								backgroundAnimation();
 							});
-
 						});
+
 					});
 
 				});
-
+				
+			});
+		});
 	}
 }
